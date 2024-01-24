@@ -1,5 +1,10 @@
+package com.goonok;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        BankAccount bankAccount = new BankAccount("Alamin", "123456");
+        bankAccount.showMenu();
+
+
     }
 }
