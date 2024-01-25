@@ -3,9 +3,10 @@ package com.goonok;
 import java.io.*;
 
 public class SaveTransactionHistory {
-    BankAccount bank = new BankAccount();
+    private BankAccount bank;
+    private String filePath="C:\\BankingApplication\\Data\\transaction";
 
-    private final File transactionFile = new File("C:\\BankingApplication\\Data\\transaction");
+    private final File transactionFile = new File(filePath);
 
     public SaveTransactionHistory(){
         File folder = new File("C:\\BankingApplication\\Data");
@@ -15,13 +16,12 @@ public class SaveTransactionHistory {
         if (!transactionFile.exists()){
             try {
                 transactionFile.createNewFile();
-            } catch (IOException e) {
+            } catch (java.io.IOException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        saveTransaction();
-        getTransaction();
+        bank = new BankAccount();
     }
 
     private String transactionType(){
@@ -36,13 +36,13 @@ public class SaveTransactionHistory {
     }
 
     protected void getTransaction(){
-        StringBuilder s = new StringBuilder();
+
 
         try{
             BufferedReader bufferedReader = new BufferedReader(new FileReader(transactionFile));
             String s1;
             while ((s1 = bufferedReader.readLine()) != null){
-                s.append(s1);
+                System.out.println(s1);
             }
             bufferedReader.close();
         } catch (FileNotFoundException e) {
@@ -56,11 +56,15 @@ public class SaveTransactionHistory {
         String s = transactionType();
 
         try{
-            PrintWriter pw = new PrintWriter(transactionFile);
-            pw.print(s);
-            pw.close();
+
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(transactionFile, true));
+            bufferedWriter.write(s);
+            bufferedWriter.newLine();
+            bufferedWriter.close();
 
         } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

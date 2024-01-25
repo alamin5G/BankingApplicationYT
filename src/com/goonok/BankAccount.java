@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class BankAccount {
     private int balance;
-    private int previousTransaction;
+    private static int previousTransaction;
     private String customerName;
     private String customerAccountNo;
     private SaveTransactionHistory history;
@@ -26,7 +26,7 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public int getPreviousTransaction() {
+    public static int getPreviousTransaction() {
 
         return previousTransaction;
     }
@@ -51,7 +51,7 @@ public class BankAccount {
     private void deposit(int amount){
         if (amount != 0){
             balance = balance + amount;
-            previousTransaction = amount;
+            this.previousTransaction = amount;
             history.saveTransaction();
         }
     }
@@ -59,7 +59,7 @@ public class BankAccount {
     private void withdraw(int amount){
         if (amount<=500000 && amount>=500 && balance>500){
             balance -= amount;
-            previousTransaction = -amount;
+            this.previousTransaction = -amount;
             history.saveTransaction();
         }
     }
@@ -99,7 +99,7 @@ public class BankAccount {
                     System.out.println("Your withdraw has been completed!");
                     break;
                 case 4:
-                    history.getTransaction();
+                   history.getTransaction();
                     break;
                 default:
                     System.out.println("Invalid option! Try again the correct one!");
